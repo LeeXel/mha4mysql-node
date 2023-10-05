@@ -11,6 +11,9 @@ BuildArch: noarch
 BuildRequires: perl(ExtUtils::MakeMaker) >= 6.30
 Requires: perl(DBD::mysql)
 Requires: perl(DBI)
+Requires: perl(English)
+Requires: perl(File::Copy)
+Requires: perl(Sys::Hostname)
 Source0: mha4mysql-node-%{version}.tar.gz
 
 %description
