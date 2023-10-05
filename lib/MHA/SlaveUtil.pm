@@ -241,11 +241,14 @@ sub check_if_super_read_only {
     { PrintError => 0, RaiseError => 1 } );
   croak "Failed to get DB Handle to check super_read_only on $host:$port!\n" unless ($dbh);
 
-  my $sth = $dbh->prepare("SELECT \@\@global.super_read_only as Value");
-  $sth->execute();
-  my $href = $sth->fetchrow_hashref;
-  if ( $href->{Value} == '1' ) {
-    return (1, $dbh);
+  my $mysql_version = get_version($dbh);
+  if ( !is_mariadb($mysql_version) && MHA::NodeUtil::mysql_version_ge( $mysql_version, "5.7.8" ) ) {
+    my $sth = $dbh->prepare("SELECT \@\@global.super_read_only as Value");
+    $sth->execute();
+    my $href = $sth->fetchrow_hashref;
+    if ( $href->{Value} == '1' ) {
+      return (1, $dbh);
+    }
   }
   return (0, 0);
 }
