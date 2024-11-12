@@ -38,7 +38,7 @@ use constant Get_Relay_Log_Info_SQL =>
   "SELECT \@\@global.relay_log_info_file AS Value";
 use constant Is_Relay_Purge_SQL => "SELECT \@\@global.relay_log_purge As Value";
 use constant Show_Log_Error_File_SQL => "SHOW VARIABLES LIKE 'log_error'";
-use constant Show_Slave_Status_SQL   => "SHOW SLAVE STATUS";
+use constant Show_Slave_Status_SQL   => "SHOW REPLICA STATUS";
 use constant Disable_Relay_Purge_SQL => "SET GLOBAL relay_log_purge=0";
 use constant Enable_Relay_Purge_SQL  => "SET GLOBAL relay_log_purge=1";
 use constant Flush_Relay_Logs_SQL =>
@@ -80,7 +80,11 @@ sub get_relay_log_info_type {
     $type = get_variable( $dbh, Get_Relay_Log_Info_Type_SQL );
   }
   unless ( defined($type) ) {
-    $type = "FILE";
+    if ( !is_mariadb($mysql_version) && MHA::NodeUtil::mysql_version_ge( $mysql_version, "8.3.0" ) ) {
+      $type = "TABLE";
+    } else {
+      $type = "FILE";
+    }
   }
   return $type;
 }
