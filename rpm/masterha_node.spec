@@ -18,6 +18,7 @@ Source0: mha4mysql-node-%{version}.tar.gz
 
 %description
 %{summary}.
+edited by growin for mysql8.4
 
 %prep
 %setup -q -n mha4mysql-node-%{version}
