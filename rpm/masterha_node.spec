@@ -1,4 +1,4 @@
-Summary: Master High Availability Manager and Tools for MySQL, Node Package
+Summary: Master High Availability Manager and Tools for MySQL, Node Package // edited by growin for mysql8.4
 Name: mha4mysql-node
 Version: 0.58
 Release: 0%{?dist}
@@ -18,7 +18,6 @@ Source0: mha4mysql-node-%{version}.tar.gz
 
 %description
 %{summary}.
-edited by growin for mysql8.4
 
 %prep
 %setup -q -n mha4mysql-node-%{version}
