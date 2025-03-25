@@ -112,6 +112,8 @@ sub init_mysqlbinlog($) {
     chomp($v);
     if ( $v =~ /Ver (\d+\.\d+)/ ) {
       $self->{mysqlbinlog_version} = $1;
+    } elsif ( $v =~ /client (\d+\.\d+)/ ) {
+      $self->{mysqlbinlog_version} = $1;
     }
     croak "$self->{mysqlbinlog} version not found!\n"
       unless ( $self->{mysqlbinlog_version} );
